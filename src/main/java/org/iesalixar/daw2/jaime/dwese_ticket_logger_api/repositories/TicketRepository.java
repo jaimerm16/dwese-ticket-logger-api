@@ -1,6 +1,6 @@
-package org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.repositories;
+package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.repositories;
 import java.util.List;
-import org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.entities.Ticket;
+import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.entities.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Repositorio para la entidad Ticket que extiende JpaRepository.

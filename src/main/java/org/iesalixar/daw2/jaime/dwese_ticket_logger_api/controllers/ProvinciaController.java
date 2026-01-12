@@ -1,9 +1,9 @@
-package org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.controllers;
+package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.controllers;
 
-import org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.entities.Provincia;
-import org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.repositories.ProvinciaRepository;
-import org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.entities.Provincia;
-import org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.repositories.RegionRepository;
+import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.entities.Provincia;
+import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.repositories.ProvinciaRepository;
+import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.entities.Provincia;
+import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.repositories.RegionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

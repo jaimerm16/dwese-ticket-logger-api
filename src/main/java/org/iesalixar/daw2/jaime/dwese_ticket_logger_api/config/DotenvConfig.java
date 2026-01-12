@@ -1,4 +1,4 @@
-package org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.config;
+package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.slf4j.Logger;

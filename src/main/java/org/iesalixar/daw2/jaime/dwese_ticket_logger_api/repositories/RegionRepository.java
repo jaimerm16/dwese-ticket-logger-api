@@ -1,5 +1,5 @@
-package org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.repositories;
-import org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.entities.Region;
+package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.repositories;
+import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.entities.Region;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

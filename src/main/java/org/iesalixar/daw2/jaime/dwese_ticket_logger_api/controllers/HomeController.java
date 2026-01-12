@@ -1,4 +1,4 @@
-package org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.controllers;
+package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

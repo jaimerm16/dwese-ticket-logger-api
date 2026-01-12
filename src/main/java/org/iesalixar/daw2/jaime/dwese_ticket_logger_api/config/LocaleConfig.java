@@ -1,4 +1,4 @@
-package org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.config;
+package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package org.iesalixar.daw2.JaimeRamirezMuela.dwese_ticket_logger_webapp.entities;
+package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
