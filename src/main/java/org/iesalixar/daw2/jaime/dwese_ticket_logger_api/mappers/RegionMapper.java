@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RegionMapper {
+
     /**
      * Convierte una entidad Region a un RegionDTO (datos básicos).
      *
@@ -18,16 +19,11 @@ public class RegionMapper {
         dto.setId(region.getId());
         dto.setCode(region.getCode());
         dto.setName(region.getName());
-        // dto.getImage
+        dto.setImage(region.getImage());
+
         return dto;
     }
 
-    /**
-     * Convierte un RegionDTO a una entidad Region.
-     *
-     * @param dto DTO de región.
-     * @return Entidad Region
-     */
     public Region toEntity(RegionDTO dto) {
         Region region = new Region();
         region.setId(dto.getId());
@@ -36,15 +32,11 @@ public class RegionMapper {
         return region;
     }
 
-    /**
-     * Convierte un RegionCreateDTO a una entidad Region (para creación).
-     * @param createDTO DTO para crear regiones
-     * @return Entidad Region
-     */
-    public Region toEntity (RegionCreateDTO createDTO) {
+    public Region toEntity(RegionCreateDTO createDTO) {
         Region region = new Region();
         region.setCode(createDTO.getCode());
         region.setName(createDTO.getName());
+
         return region;
     }
 }

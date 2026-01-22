@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-/**
- * Controlador REST que maneja las operaciones CRUD para la entidad Region.
- * Expone endpoints para gestionar regiones mediante peticiones HTTP.
- **/
 @RestController
 @RequestMapping("/api/regions")
 public class RegionController {
@@ -77,20 +73,25 @@ public class RegionController {
      * @param locale Idioma de los mensajes de error.
      * @return ResponseEntity con la región creada o un mensaje de error.
      */
-    /*
-    @PostMapping
-    public ResponseEntity<?> createRegion(@Valid @RequestBody RegionCreateDTO regionCreateDTO, Locale locale) {
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<?> createRegion(
+            @Valid @ModelAttribute RegionCreateDTO regionCreateDTO,
+            Locale locale) {
         try {
             RegionDTO createdRegion = regionService.createRegion(regionCreateDTO, locale);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdRegion);
         } catch (IllegalArgumentException e) {
+            logger.warn("Error al crear la región: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (RuntimeException e) {
+            logger.error("Error al guardar la imagen: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la imagen.");
         } catch (Exception e) {
-            logger.error("Error al crear la región: {}", e.getMessage());
+            logger.error("Error inesperado al crear la región: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la región.");
         }
     }
-*/
+
     /**
      * Actualiza una región existente por su ID.
      *
@@ -99,19 +100,22 @@ public class RegionController {
      * @param locale Idioma de los mensajes de error.
      * @return ResponseEntity con la región actualizada o un mensaje de error.
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateRegion(@PathVariable Long id,
-                                          @Valid @RequestBody RegionCreateDTO regionCreateDTO,
-                                          Locale locale) {
+    @PutMapping(value = "/{id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> updateRegion(
+            @PathVariable Long id,
+            @Valid @ModelAttribute RegionCreateDTO regionCreateDTO,
+            Locale locale) {
         try {
             RegionDTO updatedRegion = regionService.updateRegion(id, regionCreateDTO, locale);
             return ResponseEntity.ok(updatedRegion);
         } catch (IllegalArgumentException e) {
-            // Nota: Aquí podrías diferenciar si es 404 o 400 dependiendo del mensaje,
-            // pero en tu imagen se mapea a BAD_REQUEST.
+            logger.warn("Error al actualizar la región con ID {}: {}", id, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (RuntimeException e) {
+            logger.error("Error al guardar la imagen para la región con ID {}: {}", id, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la imagen.");
         } catch (Exception e) {
-            logger.error("Error al actualizar la región con ID {}: {}", id, e.getMessage());
+            logger.error("Error inesperado al actualizar la región con ID {}: {}", id, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar la región.");
         }
     }
@@ -124,13 +128,15 @@ public class RegionController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteRegion(@PathVariable Long id) {
+        logger.info("Eliminando región con ID {}", id);
         try {
             regionService.deleteRegion(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("Región eliminada con éxito.");
         } catch (IllegalArgumentException e) {
+            logger.warn("Error al eliminar la región con ID {}: {}", id, e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            logger.error("Error al eliminar la región con ID {}: {}", id, e.getMessage());
+            logger.error("Error inesperado al eliminar la región con ID {}: {}", id, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la región.");
         }
     }

@@ -1,6 +1,8 @@
 package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -12,6 +14,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class RegionDTO {
 
     /**
@@ -32,5 +36,7 @@ public class RegionDTO {
       * Ejemplo: "Andalucia", "Cataluña".
      */
      private String name;
+
+     private String image;
 }
 

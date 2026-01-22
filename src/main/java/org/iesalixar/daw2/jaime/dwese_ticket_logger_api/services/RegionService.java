@@ -1,5 +1,7 @@
 package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.services;
 
+import jakarta.validation.Valid;
+
 // DTOs, Entidades y Repositorios
 import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.dtos.RegionCreateDTO;
 import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.dtos.RegionDTO;
@@ -41,7 +43,7 @@ public class RegionService {
     /**
      * Obtiene todas las regiones de la base de datos y las convierte a DTOs.
      *
-     * @return Lista de objetos RegionDTO representando todas las regiones.
+     * @return Lista de objetos `RegionDTO` representando todas las regiones.
      */
     public List<RegionDTO> getAllRegions() {
         try {
@@ -61,7 +63,7 @@ public class RegionService {
      * Busca una región específica por su ID.
      *
      * @param id Identificador único de la región.
-     * @return Un Optional que contiene un RegionDTO si la región existe.
+     * @return Un Optional que contiene un `RegionDTO` si la región existe.
      */
     public Optional<RegionDTO> getRegionById(Long id) {
         try {
