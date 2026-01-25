@@ -2,7 +2,7 @@ package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.dtos;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
