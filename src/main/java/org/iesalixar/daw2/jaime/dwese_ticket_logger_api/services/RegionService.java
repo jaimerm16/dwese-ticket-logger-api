@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 // Spring Framework
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 // Java Utils
@@ -41,21 +43,22 @@ public class RegionService {
     private FileStorageService fileStorageService;
 
     /**
-     * Obtiene todas las regiones de la base de datos y las convierte a DTOs.
+     * Obtiene todas las regiones con paginación y las convierte en una página de RegionDTO.
      *
-     * @return Lista de objetos `RegionDTO` representando todas las regiones.
+     * @param pageable Objeto de paginación que define la página, el tamaño y la ordenación.
+     * @return Página de RegionDTO.
      */
-    public List<RegionDTO> getAllRegions() {
+    public Page<RegionDTO> getAllRegions(Pageable pageable) {
+        logger.info("Solicitando todas las regiones con paginación: página {}, tamaño {}",
+                pageable.getPageNumber(), pageable.getPageSize());
+
         try {
-            logger.info("Obteniendo todas las regiones...");
-            List<Region> regions = regionRepository.findAll();
-            logger.info("Se encontraron {} regiones.", regions.size());
-            return regions.stream()
-                    .map(regionMapper::toDTO)
-                    .toList();
+            Page<Region> regions = regionRepository.findAll(pageable);
+            logger.info("Se han encontrado {} regiones en la página actual.", regions.getNumberOfElements());
+            return regions.map(regionMapper::toDTO);
         } catch (Exception e) {
-            logger.error("Error al obtener todas las regiones: {}", e.getMessage());
-            throw new RuntimeException("Error al obtener todas las regiones.", e);
+            logger.error("Error al obtener la lista paginada de regiones: {}", e.getMessage());
+            throw e;
         }
     }
 
