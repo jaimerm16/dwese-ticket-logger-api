@@ -46,21 +46,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Las APIs REST no suelen necesitar CSRF
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Sin sesiones
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/tickets").hasRole("USER") // Solo USER
-                        .requestMatchers("/api/admin").hasRole("ADMIN") // Solo ADMIN
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/api-docs/**",
+                                "/api-docs.yaml",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+
+                        .requestMatchers("/api/tickets").hasRole("USER")
+                        .requestMatchers("/api/admin").hasRole("ADMIN")
                         .requestMatchers(
                                 "/api/regions",
                                 "/api/provinces",
                                 "/api/supermarkets",
                                 "/api/locations",
-                                "/api/categories").hasRole("MANAGER") // Solo MANAGER
-                        .requestMatchers("/api/v1/authenticate", "/api/v1/register").permitAll() // Endpoints públicos
-                        .anyRequest().authenticated() // El resto requiere autenticación
+                                "/api/categories").hasRole("MANAGER")
+                        .requestMatchers("/api/v1/authenticate", "/api/v1/register").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Filtro JWT
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -94,10 +102,20 @@ public class SecurityConfig {
 
     /**
      * Configura y expone un bean de tipo {@link AuthenticationManager}.
-     * * @param configuration Objeto de tipo {@link AuthenticationConfiguration} que contiene
-     * la configuración de autenticación de Spring Security.
-     * @return Una instancia de {@link AuthenticationManager} configurada.
-     * @throws Exception Si ocurre algún error al obtener el AuthenticationManager.
+     *
+     * En Spring Security, el `AuthenticationManager` es el componente principal que se encarga
+     * de procesar solicitudes de autenticación. Este método obtiene la instancia de
+     * `AuthenticationManager` configurada automáticamente por Spring a través de
+     * `AuthenticationConfiguration` y la expone como un bean disponible en el contexto
+     * de la aplicación.
+     *
+     * @param configuration Objeto de tipo {@link AuthenticationConfiguration} que contiene
+     * la configuración de autenticación de Spring Security. Este objeto
+     * incluye los detalles del flujo de autenticación configurado, como
+     * el proveedor de autenticación y los detalles del usuario.
+     * @return Una instancia de {@link AuthenticationManager} configurada con los detalles
+     * especificados en la aplicación.
+     * @throws Exception Si ocurre algún error al obtener el `AuthenticationManager`.
      */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {

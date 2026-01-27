@@ -19,6 +19,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -33,14 +34,8 @@ public class RegionController {
     private RegionService regionService;
 
     /**
-     * Lista todas las regiones almacenadas en la base de datos.
-     *
-     * @return ResponseEntity con la lista de regiones o un error en caso de fallo.
-     */
-    /**
      * Obtiene todas las regiones almacenadas en la base de datos.
-     *
-     * @return Lista de regiones.
+     * * @return Lista de regiones.
      */
     @Operation(summary = "Obtener todas las regiones", description = "Devuelve una lista de todas las regiones " +
             "disponibles en el sistema.")
@@ -50,12 +45,14 @@ public class RegionController {
                             array = @ArraySchema(schema = @Schema(implementation = RegionDTO.class)))),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
+
     @GetMapping
     public ResponseEntity<Page<RegionDTO>> getAllRegions(
             @PageableDefault(size = 10, sort = "name") Pageable pageable
     ) {
         logger.info("Solicitando todas las regiones con paginación: página {}, tamaño {}",
                 pageable.getPageNumber(), pageable.getPageSize());
+
         try {
             Page<RegionDTO> regions = regionService.getAllRegions(pageable);
             logger.info("Se han encontrado {} regiones.", regions.getTotalElements());
@@ -66,14 +63,7 @@ public class RegionController {
         }
     }
 
-    /**
-     * Obtiene una región específica por su ID.
-     *
-     * @param id ID de la región solicitada.
-     * @return ResponseEntity con la región encontrada o un mensaje de error si no existe.
-     */
-    @Operation(summary = "Obtener una región por ID", description = "Recupera una región " +
-            "específica según su identificador único.")
+    @Operation(summary = "Obtener una región por ID", description = "Recupera una región específica según su identificador único.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Región encontrada",
                     content = @Content(mediaType = "application/json",
@@ -100,13 +90,6 @@ public class RegionController {
         }
     }
 
-    /**
-     * Crea una nueva región en la base de datos.
-     *
-     * @param regionCreateDTO DTO que representa la nueva región.
-     * @param locale Idioma de los mensajes de error.
-     * @return ResponseEntity con la región creada o un mensaje de error.
-     */
     @Operation(summary = "Crear una nueva región", description = "Permite registrar una nueva región en la base de datos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Región creada exitosamente",
@@ -125,24 +108,13 @@ public class RegionController {
         } catch (IllegalArgumentException e) {
             logger.warn("Error al crear la región: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (RuntimeException e) {
-            logger.error("Error al guardar la imagen: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la imagen.");
         } catch (Exception e) {
             logger.error("Error inesperado al crear la región: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear la región.");
         }
     }
 
-    /**
-     * Actualiza una región existente por su ID.
-     *
-     * @param id ID de la región a actualizar.
-     * @param regionCreateDTO DTO con los nuevos datos.
-     * @param locale Idioma de los mensajes de error.
-     * @return ResponseEntity con la región actualizada o un mensaje de error.
-     */
-    @Operation(summary = "Actualiza una región", description = "Permite actualizar los datos de una región existente.")
+    @Operation(summary = "Actualizar una región", description = "Permite actualizar los datos de una región existente.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Región actualizada exitosamente",
                     content = @Content(mediaType = "application/json",
@@ -161,25 +133,16 @@ public class RegionController {
         } catch (IllegalArgumentException e) {
             logger.warn("Error al actualizar la región con ID {}: {}", id, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (RuntimeException e) {
-            logger.error("Error al guardar la imagen para la región con ID {}: {}", id, e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la imagen.");
         } catch (Exception e) {
             logger.error("Error inesperado al actualizar la región con ID {}: {}", id, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar la región.");
         }
     }
 
-    /**
-     * Elimina una región específica por su ID.
-     *
-     * @param id ID de la región a eliminar.
-     * @return ResponseEntity indicando el resultado de la operación.
-     */
-    @Operation(summary = "Eliminar una región", description = "Permite eliminar una región específica en la base de datos.")
+    @Operation(summary = "Eliminar una región", description = "Permite eliminar una región específica de la base de datos.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Región eliminada exitosamente"),
-            @ApiResponse(responseCode = "400", description = "Región no encontrada"),
+            @ApiResponse(responseCode = "404", description = "Región no encontrada"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @DeleteMapping("/{id}")

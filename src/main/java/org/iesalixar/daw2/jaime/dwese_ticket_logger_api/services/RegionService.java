@@ -42,19 +42,22 @@ public class RegionService {
     @Autowired
     private FileStorageService fileStorageService;
 
+
     /**
-     * Obtiene todas las regiones con paginación y las convierte en una página de RegionDTO.
-     *
-     * @param pageable Objeto de paginación que define la página, el tamaño y la ordenación.
-     * @return Página de RegionDTO.
+     * Obtiene todas las regiones con paginación y las convierte en una página de RegionDTO[cite: 445].
+     * @param pageable Objeto que define página, tamaño y ordenación[cite: 446].
+     * @return Página de RegionDTO[cite: 446].
      */
     public Page<RegionDTO> getAllRegions(Pageable pageable) {
         logger.info("Solicitando todas las regiones con paginación: página {}, tamaño {}",
                 pageable.getPageNumber(), pageable.getPageSize());
-
         try {
+            // Se utiliza findAll(pageable) para que la BD maneje la paginación automáticamente.
             Page<Region> regions = regionRepository.findAll(pageable);
+
             logger.info("Se han encontrado {} regiones en la página actual.", regions.getNumberOfElements());
+
+            // Se usa map para mantener la estructura paginada al convertir a DTO.
             return regions.map(regionMapper::toDTO);
         } catch (Exception e) {
             logger.error("Error al obtener la lista paginada de regiones: {}", e.getMessage());
