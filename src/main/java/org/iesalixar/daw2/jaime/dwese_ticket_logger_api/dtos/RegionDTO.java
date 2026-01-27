@@ -1,42 +1,38 @@
 package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  * Clase DTO (Data Transfer Object) que representa una región.
- * Esta close se utiliza para transferir datos de una región
+ *
+ * Esta clase se utiliza para transferir datos de una región
  * entre las capas de la aplicación, especialmente para exponerlos
  * a través de la API sin incluir información innecesaria o sensible.
  */
-
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class RegionDTO {
 
     /**
      * Identificador único de la región.
-     * Es el mismo 10 que se encuentra en la entidad Region de la base de datos.
+     * Es el mismo ID que se encuentra en la entidad 'Region' de la base de datos.
      */
     private Long id;
 
     /**
-     *Código de la región.
-     * Normalmente es una cadena corta (máximo 2 caracteres) que identifica lo región.
-     * Ejemplo: "61" para Andalucia.
+     * Código de la región.
+     * Normalmente es una cadena corta (máximo 2 caracteres) que identifica la región.
+     * Ejemplo: "01" para Andalucía.
      */
-     private String code;
+    private String code;
 
-     /**
-      * Nombre completo de la región.
-      * Ejemplo: "Andalucia", "Cataluña".
+    /**
+     * Nombre completo de la región.
+     * Ejemplo: "Andalucía", "Cataluña".
      */
-     private String name;
+    private String name;
 
-     private String image;
+
+    private String image;
 }
-

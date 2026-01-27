@@ -33,33 +33,30 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Campo que almacena el código de la región, normalmente una cadena corta que identifica la región.
+
+    // Campo que almacena el código de la región, normalmente una cadena cortaque identifica la región.
     // Ejemplo: "01" para Andalucía.
     @NotEmpty(message = "{msg.region.code.notEmpty}")
     @Size(max = 2, message = "{msg.region.code.size}")
-    @Column(name = "code", nullable = false, length = 2) // Define la columna correspondiente en la tabla.
+    @Column(name = "code", nullable = false, length = 2) // Define la columnacorrespondiente en la tabla.
     private String code;
 
-    // Campo que almacena el nombre completo de la región, como "Andalucía" o "Cataluña".
+
+    // Campo que almacena el nombre completo de la región, como "Andalucía" o"Cataluña".
     @NotEmpty(message = "{msg.region.name.notEmpty}")
     @Size(max = 100, message = "{msg.region.name.size}")
-    @Column(name = "name", nullable = false, length = 100) // Define la columna correspondiente en la tabla.
+    @Column(name = "name", nullable = false, length = 100) // Define la columnacorrespondiente en la tabla.
     private String name;
 
-    @Column(name = "image")
+    // Relación uno a muchos con la entidad Province.
+    // Una región puede tener muchas provincias.
+    //@OneToMany(mappedBy = "region", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //private List<Provincia> provinces;
+
+
+    // Campo que almacena el nombre completo de la región, como "Andalucía" o"Cataluña".
+    @Column(name = "image") // Define la columnacorrespondiente en la tabla.
     private String image;
-
-
-    /**
-     * Este es un constructor personalizado que no incluye el campo `id`.
-     * Se utiliza para crear instancias de `Region` cuando no es necesario o no
-     se conoce el `id` de la región
-     * (por ejemplo, antes de insertar la región en la base de datos, donde el
-     `id` es autogenerado).
-     * @param code Código de la región.
-     * @param name Nombre de la región.
-     */
-
 
     public Region(String code, String name) {
         this.code = code;
