@@ -50,6 +50,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .securityMatcher("/api/**") // Solo protege rutas que empiezan con "/api/"
                 .cors(withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -59,12 +60,12 @@ public class SecurityConfig {
                                 "/api-docs/**",
                                 "/api-docs.yaml",
                                 "/swagger-ui/**",
-                                "/swagger-ui.html"
+                                "/swagger-ui.html", "/api/users"
                         ).permitAll()
-
-                        .requestMatchers("/api/tickets").hasRole("USER")
-                        .requestMatchers("/api/admin").hasRole("ADMIN")
+                        .requestMatchers("/api/tickets", "/api/users").hasRole("USER")
+                        .requestMatchers("/api/admin", "/api/users").hasRole("ADMIN")
                         .requestMatchers(
+                                "/api/users",
                                 "/api/regions",
                                 "/api/provinces",
                                 "/api/supermarkets",

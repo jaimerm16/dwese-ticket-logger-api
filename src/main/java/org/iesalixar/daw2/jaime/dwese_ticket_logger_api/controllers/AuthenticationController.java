@@ -3,6 +3,8 @@ package org.iesalixar.daw2.jaime.dwese_ticket_logger_api.controllers;
 import jakarta.validation.Valid;
 import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.dtos.AuthRequestDTO;
 import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.dtos.AuthResponseDTO;
+import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.repositories.UserRepository;
+import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.services.UserService;
 import org.iesalixar.daw2.jaime.dwese_ticket_logger_api.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,8 @@ public class AuthenticationController {
     @Autowired
     private JwtUtil jwtUtil; // Utilidad personalizada para manejar tokens JWT
 
+    @Autowired
+    private UserService userService;
     /**
      * Genera un token JWT que incluye información del usuario y sus roles.
      *
@@ -54,7 +58,7 @@ public class AuthenticationController {
                     .toList();
 
             // Genera un token JWT para el usuario autenticado, incluyendo sus roles
-            String token = jwtUtil.generateToken(username, roles);
+            String token = jwtUtil.generateToken(username, roles, userService.getIdByUsername(username));
 
             // Retorna una respuesta con el token JWT y un mensaje de éxito
             return ResponseEntity.ok(new AuthResponseDTO(token, "Authentication successful"));

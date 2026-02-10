@@ -75,10 +75,11 @@ public class JwtUtil {
      * @param roles la lista de roles del usuario (por ejemplo, ["USER", "ADMIN"]).
      * @return el token JWT generado.
      */
-    public String generateToken(String username, List<String> roles) {
+    public String generateToken(String username, List<String> roles, Long id) {
         return Jwts.builder()
                 .subject(username)
                 .claim("roles", roles)
+                .claim("id", id)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
                 .signWith(jwtKeyPair.getPrivate(), Jwts.SIG.RS256) // Firma explícita con RS256
